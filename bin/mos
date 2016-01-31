@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+import mos
+from argparse import ArgumentParser
+
+# make dict from args
+parser = ArgumentParser(description="mos")
+parser.add_argument('-n', dest='num', default=1, type=int, help='can be 1 or 2')
+args = parser.parse_args()
+
+# start app
+mos.start(mos_num=args.num)
