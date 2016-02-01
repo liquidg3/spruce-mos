@@ -19,6 +19,13 @@ timer = False
 leds_addresses = [
     [],  # mos is 1 or 2 so nothing for 0
     [
+        {"product_id": 404512392, "name": 'Head Shave'},  # 0x70
+        {"product_id": 404510764, "name": 'Mustache'},
+        {"product_id": 717345668, "name": 'Neck Trim'},
+        {"product_id": 762920836, "name": 'Shampoo'},
+        {"product_id": 404512688, "name": 'Young Spruce'},  # 0x74
+    ],
+    [
         {"product_id": 419627296, "name": 'Style Consult'},  # 0x70
         {"product_id": 404511532, "name": 'The Ultimate'},
         {"product_id": 404513412, "name": 'The Signature'},
@@ -27,13 +34,6 @@ leds_addresses = [
         {"product_id": 404513644, "name": 'Spruced Up Shave'},
         {"product_id": 404514000, "name": 'Traditional Shave'},
         {"product_id": 453926320, "name": 'Beard Trim'},  # 0x77
-    ],
-    [
-        {"product_id": 404512392, "name": 'Head Shave'},  # 0x70
-        {"product_id": 404510764, "name": 'Mustache'},
-        {"product_id": 717345668, "name": 'Neck Trim'},
-        {"product_id": 762920836, "name": 'Shampoo'},
-        {"product_id": 404512688, "name": 'Young Spruce'},  # 0x74
     ]
 ]
 
