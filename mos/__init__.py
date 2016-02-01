@@ -2,6 +2,7 @@ from socketIO_client import SocketIO, BaseNamespace
 from mos.SevenSegmentMock import SevenSegmentMock
 from Adafruit_LED_Backpack import SevenSegment
 from threading import Timer
+import time
 
 import logging
 
@@ -71,7 +72,11 @@ def setup_leds(mos_num=1):
         product_ids.append(payload['product_id'])
         led = instantiate_led(0x70 + idx)
         led.begin()
+        led.print_float(0x70 + idx, decimal_digits=0)
+        led.write_display()
         leds[payload['product_id']] = led
+
+    time.sleep(5)
 
 
 def on_connect():
