@@ -76,6 +76,7 @@ def setup_leds(mos_num=1):
         led.write_display()
         leds[payload['product_id']] = led
 
+    print("starting 5 second sleep")
     time.sleep(5)
 
 
