@@ -73,7 +73,7 @@ def setup_leds(mos_num=1):
         address = payload['address']
         led = instantiate_led(address)
         led.begin()
-        led.print_float(0x70 + idx, decimal_digits=0)
+        led.print_float(payload['address'], decimal_digits=0)
         led.write_display()
         leds[payload['product_id']] = led
 
