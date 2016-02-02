@@ -128,3 +128,8 @@ def minutes_to_hours_minutes(minutes):
 def interval():
     if socket.connected:
         refresh_wait_times()
+
+    # check wait_times every 60 seconds
+    global timer
+    timer = Timer(60.0, interval)
+    timer.start()
