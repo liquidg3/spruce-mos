@@ -19,21 +19,21 @@ timer = False
 leds_addresses = [
     [],  # mos is 1 or 2 so nothing for 0
     [
-        {"product_id": 404512392, "name": 'Head Shave'},  # 0x70
-        {"product_id": 404510764, "name": 'Mustache'},
-        {"product_id": 717345668, "name": 'Neck Trim'},
-        {"product_id": 762920836, "name": 'Shampoo'},
-        {"product_id": 404512688, "name": 'Young Spruce'},  # 0x74
+        {"product_id": 404512392, "address": 0x70, "name": 'Head Shave'},
+        {"product_id": 404510764, "address": 0x71, "name": 'Mustache'},
+        {"product_id": 717345668, "address": 0x72, "name": 'Neck Trim'},
+        {"product_id": 762920836, "address": 0x73, "name": 'Shampoo'},
+        {"product_id": 404512688, "address": 0x74, "name": 'Young Spruce'},
     ],
     [
-        {"product_id": 419627296, "name": 'Style Consult'},  # 0x70
-        {"product_id": 404511532, "name": 'The Ultimate'},
-        {"product_id": 404513412, "name": 'The Signature'},
-        {"product_id": 762876484, "name": 'The Regular'},
-        {"product_id": 404512112, "name": 'The Simple'},
-        {"product_id": 404513644, "name": 'Spruced Up Shave'},
-        {"product_id": 404514000, "name": 'Traditional Shave'},
-        {"product_id": 453926320, "name": 'Beard Trim'},  # 0x77
+        {"product_id": 419627296, "address": 0x70, "name": 'Style Consult'},
+        {"product_id": 404511532, "address": 0x71, "name": 'The Ultimate'},
+        {"product_id": 404513412, "address": 0x72, "name": 'The Signature'},
+        {"product_id": 762876484, "address": 0x73, "name": 'The Regular'},
+        {"product_id": 404512112, "address": 0x74, "name": 'The Simple'},
+        {"product_id": 404513644, "address": 0x75, "name": 'Spruced Up Shave'},
+        {"product_id": 404514000, "address": 0x76, "name": 'Traditional Shave'},
+        {"product_id": 453926320, "address": 0x77, "name": 'Beard Trim'},
     ]
 ]
 
@@ -67,17 +67,18 @@ def setup_leds(mos_num=1):
     product_ids = []
     addresses = leds_addresses[mos_num]
 
-    for idx, payload in enumerate(addresses):
-        print('setting up product %s' % payload['name'])
+    for payload in enumerate(addresses):
+        print('setting up product %s on %s' % payload['name'], payload['address'])
         product_ids.append(payload['product_id'])
-        led = instantiate_led(0x70 + idx)
+        address = payload['address']
+        led = instantiate_led(address)
         led.begin()
         led.print_float(0x70 + idx, decimal_digits=0)
         led.write_display()
         leds[payload['product_id']] = led
 
-    print("starting 5 second sleep")
-    time.sleep(5)
+    print("starting 10 second sleep")
+    time.sleep(10)
 
 
 def on_connect():
