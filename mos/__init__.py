@@ -19,17 +19,17 @@ timer = False
 leds_addresses = [
     [],  # mos is 1 or 2 so nothing for 0
     [
-        {"product_id": 419627296, "address": 0x70, "name": 'Style Consult'},
-        {"product_id": 404511532, "address": 0x71, "name": 'The Ultimate'},
+        {"product_id": 404511532, "address": 0x70, "name": 'The Ultimate'},
+        {"product_id": 419627296, "address": 0x71, "name": 'Style Consult'},
         {"product_id": 404513412, "address": 0x72, "name": 'The Signature'},
         {"product_id": 762876484, "address": 0x73, "name": 'The Regular'},
         {"product_id": 404512112, "address": 0x74, "name": 'The Simple'},
         {"product_id": 404513644, "address": 0x75, "name": 'Spruced Up Shave'},
         {"product_id": 404514000, "address": 0x76, "name": 'Traditional Shave'},
-        {"product_id": 453926320, "address": 0x77, "name": 'Beard Trim'},
+        {"product_id": 404512392, "address": 0x77, "name": 'Head Shave'},
     ],
-     [
-        {"product_id": 404512392, "address": 0x70, "name": 'Head Shave'},
+    [
+        {"product_id": 453926320, "address": 0x70, "name": 'Beard Trim'},
         {"product_id": 404510764, "address": 0x71, "name": 'Mustache'},
         {"product_id": 717345668, "address": 0x72, "name": 'Neck Trim'},
         {"product_id": 762920836, "address": 0x73, "name": 'Shampoo'},
