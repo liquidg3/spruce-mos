@@ -68,7 +68,7 @@ def setup_leds(mos_num=1):
     addresses = leds_addresses[mos_num]
 
     for idx, payload in enumerate(addresses):
-        print('setting up product %s on %d' % payload['name'], payload['address'])
+        print('setting up product %s on %d' % (payload['name'], payload['address']))
         product_ids.append(payload['product_id'])
         address = payload['address']
         led = instantiate_led(address)
