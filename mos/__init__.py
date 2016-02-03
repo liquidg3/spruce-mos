@@ -114,7 +114,10 @@ def did_get_wait_times(error, wait_times):
 def instantiate_led(address, test_mode=False):
     if test_mode:
         return SevenSegmentMock(address=address)
-    return SevenSegment.SevenSegment(address=address)
+
+    display = SevenSegment.SevenSegment(address=address)
+    display._device._logger.basicConfig(level=logging.WARNING)
+    return display
 
 
 def minutes_to_hours_minutes(minutes):
