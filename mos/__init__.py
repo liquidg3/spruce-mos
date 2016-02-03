@@ -11,6 +11,7 @@ logging.basicConfig(level=logging.WARNING)
 
 # logging
 logger = logging.getLogger('mos')
+logger.setLevel(logging.INFO)
 
 # our connection
 socket = False
