@@ -41,15 +41,15 @@ product_ids = []
 leds = {}
 
 
-def start(mos_num=1):
+def start(mos_num=1, test_mode=False):
     global socket
 
     # setup leds
-    setup_leds(mos_num=mos_num)
+    setup_leds(mos_num=mos_num, test_mode=test_mode)
 
     # check wait_times every 60 seconds
     global timer
-    timer = Timer(60.0, interval)
+    timer = Timer(30.0, interval)
     timer.start()
 
     # connect to appointments
@@ -60,7 +60,7 @@ def start(mos_num=1):
     socket.wait()
 
 
-def setup_leds(mos_num=1):
+def setup_leds(mos_num=1, test_mode=False):
     global product_ids
     global leds
 
@@ -71,14 +71,14 @@ def setup_leds(mos_num=1):
         print('setting up product %s on %d' % (payload['name'], payload['address']))
         product_ids.append(payload['product_id'])
         address = payload['address']
-        led = instantiate_led(address)
+        led = instantiate_led(address, test_mode=test_mode)
         led.begin()
         led.print_float(payload['address'], decimal_digits=0)
         led.write_display()
         leds[payload['product_id']] = led
 
-    print("starting 10 second sleep")
-    time.sleep(10)
+    print("starting 5 second sleep")
+    time.sleep(5)
 
 
 def on_connect():
@@ -111,8 +111,9 @@ def did_get_wait_times(error, wait_times):
         led.write_display()
 
 
-def instantiate_led(address):
-    # return SevenSegmentMock(address=address)
+def instantiate_led(address, test_mode=False):
+    if test_mode:
+        return SevenSegmentMock(address=address)
     return SevenSegment.SevenSegment(address=address)
 
 
@@ -129,7 +130,7 @@ def interval():
     if socket.connected:
         refresh_wait_times()
 
-    # check wait_times every 60 seconds
+    # check wait_times every 30 seconds
     global timer
-    timer = Timer(60.0, interval)
+    timer = Timer(30.0, interval)
     timer.start()
