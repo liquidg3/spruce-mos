@@ -7,7 +7,10 @@ import time
 import logging
 
 logging.getLogger('requests').setLevel(logging.WARNING)
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
+
+# logging
+logger = logging.getLogger('mos')
 
 # our connection
 socket = False
@@ -68,16 +71,23 @@ def setup_leds(mos_num=1, test_mode=False):
     addresses = leds_addresses[mos_num]
 
     for idx, payload in enumerate(addresses):
-        print('setting up product %s on %d' % (payload['name'], payload['address']))
+        logger.info('setting up product %s on %d' % (payload['name'], payload['address']))
         product_ids.append(payload['product_id'])
         address = payload['address']
-        led = instantiate_led(address, test_mode=test_mode)
-        led.begin()
-        led.print_float(payload['address'], decimal_digits=0)
-        led.write_display()
-        leds[payload['product_id']] = led
+        try:
+            led = instantiate_led(address, test_mode=test_mode)
+            led.begin()
+            led.print_float(payload['address'], decimal_digits=0)
+            led.write_display()
+            leds[payload['product_id']] = led
+        except IOError as e:
+            logger.error("failed to connect to led at %d" % (address))
+            logger.exception(e)
+        except Exception as e:
+            logger.error("failed to connect to led at %d" % (address))
+            logger.exception(e)
 
-    print("starting 5 second sleep")
+    logger.info("starting 5 second sleep")
     time.sleep(5)
 
 
@@ -95,20 +105,21 @@ def refresh_wait_times():
 
 def did_get_wait_times(error, wait_times):
     if error is not None:
-        print('wait_times_error')
-        print(error)
+        logger.error('wait_times_error')
+        logger.error(error)
         return
 
     for product_id, wait_time in wait_times.iteritems():
-        led = leds[int(product_id)]
-        led.clear()
-        time = minutes_to_hours_minutes(wait_time)
+        if int(product_id) in leds:
+            led = leds[int(product_id)]
+            led.clear()
+            time = minutes_to_hours_minutes(wait_time)
 
-        show_colon = True if time["hours"] > 0 else False
-        time = "%s%s" % (time['hours'], time['minutes'])
-        led.set_colon(show_colon)
-        led.print_float(float(time), decimal_digits=0)
-        led.write_display()
+            show_colon = True if time["hours"] > 0 else False
+            time = "%s%s" % (time['hours'], time['minutes'])
+            led.set_colon(show_colon)
+            led.print_float(float(time), decimal_digits=0)
+            led.write_display()
 
 
 def instantiate_led(address, test_mode=False):
