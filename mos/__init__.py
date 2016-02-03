@@ -127,7 +127,7 @@ def instantiate_led(address, test_mode=False):
         return SevenSegmentMock(address=address)
 
     display = SevenSegment.SevenSegment(address=address)
-    display._device._logger.basicConfig(level=logging.WARNING)
+    display._device._logger.setLevel(logging.WARNING)
     return display
 
 
