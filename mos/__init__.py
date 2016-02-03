@@ -60,7 +60,11 @@ def start(mos_num=1, test_mode=False):
     socket = SocketIO('https://appointments.spruce.me', verify=False)
     socket.on('connect', on_connect)
     socket.on('did-book-appointments', did_make_appointment)
+    socket.on('did-cancel-appointments', did_make_appointment)
+    socket.on('did-cancel-appointments', did_make_appointment)
+    socket.on('did-update-appointment', did_make_appointment)
 
+    # wait for connections
     socket.wait()
 
 
