@@ -14,10 +14,10 @@ logger = logging.getLogger('mos')
 logger.setLevel(logging.INFO)
 
 # our connection
-socket = False
+socket = None
 
 # timer
-timer = False
+timer = None
 
 # led address
 leds_addresses = [
@@ -50,11 +50,6 @@ def start(mos_num=1, test_mode=False):
 
     # setup leds
     setup_leds(mos_num=mos_num, test_mode=test_mode)
-
-    # check wait_times every 60 seconds
-    global timer
-    timer = Timer(30.0, interval)
-    timer.start()
 
     # connect to appointments
     socket = SocketIO('https://appointments.spruce.me', verify=False)
@@ -97,11 +92,11 @@ def setup_leds(mos_num=1, test_mode=False):
 
 
 def on_connect():
-    refresh_wait_times()
+    interval()
 
 
 def did_make_appointment(args):
-    refresh_wait_times()
+    interval()
 
 
 def refresh_wait_times():
@@ -151,5 +146,9 @@ def interval():
 
     # check wait_times every 30 seconds
     global timer
+
+    if timer is not None:
+        timer.cancel()
+
     timer = Timer(30.0, interval)
     timer.start()
