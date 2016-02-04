@@ -150,5 +150,5 @@ def interval():
     if timer is not None:
         timer.cancel()
 
-    timer = Timer(30.0, interval)
+    timer = Timer(60.0, interval)
     timer.start()
