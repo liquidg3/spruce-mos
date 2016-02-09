@@ -116,7 +116,7 @@ def did_get_wait_times(error, wait_times):
             time = minutes_to_hours_minutes(wait_time)
 
             show_colon = True if time["hours"] > 0 else False
-            time = "%s%s" % (time['hours'], time['minutes'])
+            time = "%d%02d" % (time['hours'], time['minutes'])
             led.set_colon(show_colon)
             led.print_float(float(time), decimal_digits=0)
             led.write_display()
