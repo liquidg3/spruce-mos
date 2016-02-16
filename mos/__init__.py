@@ -5,6 +5,7 @@ from threading import Timer
 import time
 
 import logging
+import sys
 
 logging.getLogger('requests').setLevel(logging.WARNING)
 logging.basicConfig(level=logging.WARNING)
@@ -12,6 +13,12 @@ logging.basicConfig(level=logging.WARNING)
 # logging
 logger = logging.getLogger('mos')
 logger.setLevel(logging.INFO)
+
+ch = logging.StreamHandler(sys.stdout)
+ch.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
 # our connection
 socket = None
@@ -89,6 +96,7 @@ def setup_leds(mos_num=1, test_mode=False):
 
     logger.info("starting 5 second sleep")
     time.sleep(5)
+    logger.info('*yawn* awake again')
 
 
 def on_connect():
@@ -109,6 +117,8 @@ def did_get_wait_times(error, wait_times):
         logger.error(error)
         return
 
+    logger.info('got wait times, setting LEDS')
+
     for product_id, wait_time in wait_times.iteritems():
         if int(product_id) in leds:
             led = leds[int(product_id)]
@@ -120,6 +130,8 @@ def did_get_wait_times(error, wait_times):
             led.set_colon(show_colon)
             led.print_float(float(time), decimal_digits=0)
             led.write_display()
+
+    logger.info('done setting LEDS')
 
 
 def instantiate_led(address, test_mode=False):
@@ -141,8 +153,13 @@ def minutes_to_hours_minutes(minutes):
 
 
 def interval():
+    logger.info('heartbeat')
+
     if socket.connected:
+        logger.info('refreshing times')
         refresh_wait_times()
+    else:
+        logger.error('holy shit not connected to appointments.spruce.me!')
 
     # check wait_times every 30 seconds
     global timer
