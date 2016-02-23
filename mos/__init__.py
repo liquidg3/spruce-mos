@@ -56,6 +56,8 @@ def start(mos_num=1, test_mode=False):
     # setup leds
     setup_leds(mos_num=mos_num, test_mode=test_mode)
 
+    return
+
     # connect
     connect()
 
