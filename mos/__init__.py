@@ -133,7 +133,7 @@ def did_get_wait_times(error, wait_times):
             led.clear()
             time = minutes_to_hours_minutes(wait_time)
 
-            logger.info('product with id %d has a wait time of %d:%02d', (int(product_id), time['hours'], time['minutes']))
+            logger.info('product with id %d has a wait time of %d:%02d' % (int(product_id), time['hours'], time['minutes']))
 
             show_colon = True if time["hours"] > 0 else False
             time = "%d%02d" % (time['hours'], time['minutes'])
