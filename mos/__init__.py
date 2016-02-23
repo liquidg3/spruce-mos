@@ -62,12 +62,11 @@ def start(mos_num=1, test_mode=False):
     connect()
 
 
-def connect:
-
+def connect():
     if socket not None:
         socket.disconnect()
 
-     # connect to appointments
+        # connect to appointments
     socket = SocketIO('https://appointments.spruce.me', verify=False)
     socket.on('connect', on_connect)
     socket.on('did-book-appointments', did_make_appointment)
