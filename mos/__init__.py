@@ -58,7 +58,16 @@ def start(mos_num=1, test_mode=False):
     # setup leds
     setup_leds(mos_num=mos_num, test_mode=test_mode)
 
-    # connect to appointments
+    # connect
+    connect()
+
+
+def connect:
+
+    if socket not None:
+        socket.disconnect()
+
+     # connect to appointments
     socket = SocketIO('https://appointments.spruce.me', verify=False)
     socket.on('connect', on_connect)
     socket.on('did-book-appointments', did_make_appointment)
@@ -160,6 +169,7 @@ def interval():
         refresh_wait_times()
     else:
         logger.error('holy shit not connected to appointments.spruce.me!')
+        connect()
 
     # check wait_times every 30 seconds
     global timer
