@@ -53,8 +53,6 @@ leds = {}
 
 
 def start(mos_num=1, test_mode=False):
-    global socket
-
     # setup leds
     setup_leds(mos_num=mos_num, test_mode=test_mode)
 
@@ -63,6 +61,8 @@ def start(mos_num=1, test_mode=False):
 
 
 def connect():
+    global socket
+
     if socket is not None:
         socket.disconnect()
 
