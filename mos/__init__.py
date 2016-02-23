@@ -30,14 +30,14 @@ timer = None
 leds_addresses = [
     [],  # mos is 1 or 2 so nothing for 0
     [
-        {"product_id": 404511532, "address": 0x70, "name": 'The Ultimate'},
-        {"product_id": 419627296, "address": 0x71, "name": 'Style Consult'},
-        {"product_id": 404513412, "address": 0x72, "name": 'The Signature'},
-        {"product_id": 762876484, "address": 0x73, "name": 'The Regular'},
-        {"product_id": 404512112, "address": 0x74, "name": 'The Simple'},
-        {"product_id": 404513644, "address": 0x75, "name": 'Spruced Up Shave'},
-        {"product_id": 404514000, "address": 0x76, "name": 'Traditional Shave'},
-        {"product_id": 404512392, "address": 0x77, "name": 'Head Shave'},
+        {"product_id": 404511532, "address": 0x70, "name": 'The Ultimate'}, #112
+        {"product_id": 419627296, "address": 0x71, "name": 'Style Consult'}, #113
+        {"product_id": 404513412, "address": 0x72, "name": 'The Signature'}, #114
+        {"product_id": 762876484, "address": 0x73, "name": 'The Regular'}, #115
+        {"product_id": 404512112, "address": 0x74, "name": 'The Simple'}, #116
+        {"product_id": 404513644, "address": 0x75, "name": 'Spruced Up Shave'}, #117
+        {"product_id": 404514000, "address": 0x76, "name": 'Traditional Shave'}, #118
+        {"product_id": 404512392, "address": 0x77, "name": 'Head Shave'}, #119
     ],
     [
         {"product_id": 453926320, "address": 0x70, "name": 'Beard Trim'},
@@ -55,8 +55,6 @@ leds = {}
 def start(mos_num=1, test_mode=False):
     # setup leds
     setup_leds(mos_num=mos_num, test_mode=test_mode)
-
-    return
 
     # connect
     connect()
@@ -134,6 +132,8 @@ def did_get_wait_times(error, wait_times):
             led = leds[int(product_id)]
             led.clear()
             time = minutes_to_hours_minutes(wait_time)
+
+            logger.info('product with id %d has a wait time of %d:%02d', (int(product_id), time['hours'], time['minutes']))
 
             show_colon = True if time["hours"] > 0 else False
             time = "%d%02d" % (time['hours'], time['minutes'])
