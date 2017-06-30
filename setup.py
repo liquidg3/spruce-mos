@@ -12,7 +12,7 @@ setup(name="mos",
           'https://github.com/adafruit/Adafruit_Python_LED_Backpack.git@master#egg=Adafruit-LED-Backpack'
       ],
       install_requires=[
-          'SocketIO-client',
+          'SocketIO-client-2',
           'argparse',
           'Adafruit-GPIO',
           'Adafruit-LED-Backpack'
