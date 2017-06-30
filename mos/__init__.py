@@ -50,6 +50,7 @@ leds_addresses = [
 
 product_ids = []
 leds = {}
+refresh_count = 0
 
 
 def start(mos_num=1, test_mode=False):
@@ -123,6 +124,8 @@ def did_make_appointment(args):
 
 
 def refresh_wait_times():
+    global refresh_count
+    refresh_count -= 1
     socket.emit('wait-times-in-minutes', product_ids, did_get_wait_times)
 
 
@@ -131,6 +134,10 @@ def did_get_wait_times(error, wait_times):
         logger.error('wait_times_error')
         logger.error(error)
         return
+
+    global refresh_count
+
+    refresh_count = 0
 
     logger.info('got wait times, setting LEDS')
 
@@ -180,6 +187,12 @@ def minutes_to_hours_minutes(minutes):
 def interval():
     logger.info('heartbeat')
 
+    global refresh_count
+
+    if refresh_count > 1:
+        logger.error('holy shit not connected to appointments.spruce.me!')
+        connect()
+        error_out()
     if socket and socket.connected:
         logger.info('refreshing times')
         refresh_wait_times()
