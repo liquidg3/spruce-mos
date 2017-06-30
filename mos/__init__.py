@@ -156,6 +156,7 @@ def error_out():
     for product_id in leds:
         led = leds[int(product_id)]
         led.clear()
+        led.write_display()
 
 
 def instantiate_led(address, test_mode=False):
