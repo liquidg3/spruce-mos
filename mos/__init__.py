@@ -189,6 +189,8 @@ def interval():
 
     global refresh_count
 
+    logger.error('test %d' % refresh_count)
+
     if refresh_count > 1:
         logger.error('holy shit not connected to appointments.spruce.me!')
         connect()
