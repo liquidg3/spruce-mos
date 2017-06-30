@@ -69,6 +69,7 @@ def connect():
     # connect to appointments
     socket = SocketIO('https://appointments.spruce.me', verify=False)
     socket.on('connect', on_connect)
+    socket.on('disconnect', on_disconnect)
     socket.on('did-book-appointments', did_make_appointment)
     socket.on('did-cancel-appointments', did_make_appointment)
     socket.on('did-cancel-appointments', did_make_appointment)
@@ -105,6 +106,12 @@ def setup_leds(mos_num=1, test_mode=False):
     logger.info("starting 5 second sleep")
     time.sleep(5)
     logger.info('*yawn* awake again')
+
+def on_disconnect():
+    logger.error('SOCKETS DISCONNECTED')
+    error_out()
+    interval()
+
 
 
 def on_connect():
@@ -144,6 +151,12 @@ def did_get_wait_times(error, wait_times):
     logger.info('done setting LEDS')
 
 
+def error_out():
+    for product_id in leds:
+        led = leds[int(product_id)]
+        led.clear()
+
+
 def instantiate_led(address, test_mode=False):
     if test_mode:
         return SevenSegmentMock(address=address)
@@ -171,6 +184,7 @@ def interval():
     else:
         logger.error('holy shit not connected to appointments.spruce.me!')
         connect()
+        error_out()
 
     # check wait_times every 30 seconds
     global timer
