@@ -78,8 +78,13 @@ def connect():
     socket.on('did-cancel-appointments', did_make_appointment)
     socket.on('did-update-appointment', did_make_appointment)
 
+    count = 0
+
     # wait for connections
-    socket.wait()
+    while True:
+        socket.wait(seconds=1)
+        count += 1
+        logger.info('wait count %d', count)
 
 
 def setup_leds(mos_num=1, test_mode=False):
