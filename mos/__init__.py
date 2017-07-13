@@ -65,10 +65,11 @@ def connect():
     global socket
 
     if socket is not None:
-        socket.disconnect()
+        return
+        # socket.disconnect() a bug?? in socket io can't seem to disconnect. just need one socket io instance
 
     # connect to appointments
-    socket = SocketIO('https://appointments.spruce.me', verify=False, transports=['websocket'],
+    socket = SocketIO('https://appointments.spruce.me', verify=False,
                       hurry_interval_in_seconds=0.5)
     socket.on('connect', on_connect)
     socket.on('reconnect', on_reconnect)
@@ -78,13 +79,8 @@ def connect():
     socket.on('did-cancel-appointments', did_make_appointment)
     socket.on('did-update-appointment', did_make_appointment)
 
-    count = 0
-
     # wait for connections
-    while True:
-        socket.wait(seconds=1)
-        count += 1
-        logger.info('wait count %d', count)
+    socket.wait()
 
 
 def setup_leds(mos_num=1, test_mode=False):
