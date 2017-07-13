@@ -172,6 +172,7 @@ def did_get_wait_times(error, wait_times):
 
 
 def error_out():
+    logger.info('ERRORING OUT DISPLAYS')
     for product_id in leds:
         led = leds[int(product_id)]
         led.clear()
@@ -205,15 +206,15 @@ def interval():
 
     if refresh_count > 1:
         logger.error('holy shit not connected to appointments.spruce.me!')
-        connect()
         error_out()
+        connect()
     if socket and socket.connected:
         logger.info('refreshing times')
         refresh_wait_times()
     else:
         logger.error('holy shit not connected to appointments.spruce.me!')
-        connect()
         error_out()
+        connect()
 
     # check wait_times every 30 seconds
     global timer
