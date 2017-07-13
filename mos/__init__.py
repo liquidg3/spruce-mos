@@ -171,7 +171,8 @@ def error_out():
     logger.info('ERRORING OUT DISPLAYS')
     for product_id in leds:
         led = leds[int(product_id)]
-        led.clear()
+        led.set_colon(False)
+        led.print_number_str('----')
         led.write_display()
 
 
