@@ -68,8 +68,10 @@ def connect():
         socket.disconnect()
 
     # connect to appointments
-    socket = SocketIO('https://appointments.spruce.me', verify=False)
+    socket = SocketIO('https://appointments.spruce.me', verify=False, transports=['websocket'],
+                      hurry_interval_in_seconds=0.5)
     socket.on('connect', on_connect)
+    socket.on('reconnect', on_reconnect)
     socket.on('disconnect', on_disconnect)
     socket.on('did-book-appointments', did_make_appointment)
     socket.on('did-cancel-appointments', did_make_appointment)
@@ -116,6 +118,11 @@ def on_disconnect():
 
 
 def on_connect():
+    interval()
+
+
+def on_reconnect():
+    logger.info('reconnected...')
     interval()
 
 
