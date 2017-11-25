@@ -14,9 +14,12 @@ class SevenSegmentMock:
         print("beginning on LED %s" % self.address)
 
     def write_display(self):
-        # print("writing display to %s" % self.address)
+        print("writing display to %s" % self.address)
         pass
 
     def clear(self):
         # print('clearing %s' % self.address)
         pass
+
+    def print_number_str(self, value):
+        print("printing on %s LED %s" % (value, self.address))

@@ -154,14 +154,24 @@ def did_get_wait_times(error, wait_times):
             led = leds[int(product_id)]
             led.clear()
             time = minutes_to_hours_minutes(wait_time)
+            time["hours"] = 8
+            time["minutes"] = 8
+
+            if time["hours"] < 10:
+                time = "%dF%d" % (time["hours"], time["minutes"])
+            elif time["hours"] == 0:
+                time = "%d" % time["minutes"]
+            else:
+                time = "%dF" % time['hours']
 
             logger.info(
-                'product with id %d has a wait time of %d:%02d' % (int(product_id), time['hours'], time['minutes']))
+                'product with id %d has a wait time of %s' % (int(product_id), time))
 
-            show_colon = True if time["hours"] > 0 else False
-            time = "%d%02d" % (time['hours'], time['minutes'])
-            led.set_colon(show_colon)
-            led.print_float(float(time), decimal_digits=0)
+            # show_colon = True if time["hours"] > 0 else False
+
+
+            # led.set_colon(show_colon)
+            led.print_number_str(time)
             led.write_display()
 
     logger.info('done setting LEDS')
@@ -191,6 +201,7 @@ def minutes_to_hours_minutes(minutes):
     hours = (minutes - min) / 60
     time["hours"] = hours
     time["minutes"] = min
+
     return time
 
 
