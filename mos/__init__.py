@@ -34,17 +34,17 @@ leds_addresses = [
         {"product_id": 419627296, "address": 0x71, "name": 'Style Consult'},  # 113
         {"product_id": 404513412, "address": 0x72, "name": 'The Signature'},  # 114
         {"product_id": 762876484, "address": 0x73, "name": 'The Regular'},  # 115
-        {"product_id": 404512112, "address": 0x74, "name": 'The Simple'},  # 116
         {"product_id": 404513644, "address": 0x75, "name": 'Spruced Up Shave'},  # 117
-        {"product_id": 404514000, "address": 0x76, "name": 'Traditional Shave'},  # 118
+        {"product_id": 9813368132, "address": 0x76, "name": 'Clean Up'},  # 118
+        {"product_id": 404512112, "address": 0x74, "name": 'The Simple'},  # 116
         {"product_id": 404512392, "address": 0x77, "name": 'Head Shave'},  # 119
     ],
     [
-        {"product_id": 453926320, "address": 0x70, "name": 'Beard Trim'},
-        {"product_id": 404510764, "address": 0x71, "name": 'Mustache'},
-        {"product_id": 717345668, "address": 0x72, "name": 'Neck Trim'},
-        {"product_id": 762920836, "address": 0x73, "name": 'Shampoo'},
-        {"product_id": 404512688, "address": 0x74, "name": 'Young Spruce'},
+        {"product_id": 453926320, "address": 0x70, "name": 'Beard Trim'},  # 112
+        {"product_id": 9813387908, "address": 0x71, "name": 'Nose Wax'},  # 113
+        {"product_id": 6273210244, "address": 0x72, "name": 'Headshot'},  # 114
+        {"product_id": 762920836, "address": 0x73, "name": 'Shampoo'},  # 115
+        {"product_id": 404512688, "address": 0x74, "name": 'Young Spruce'},  # 116
     ],
 ]
 
@@ -154,8 +154,7 @@ def did_get_wait_times(error, wait_times):
             led = leds[int(product_id)]
             led.clear()
             time = minutes_to_hours_minutes(wait_time)
-            time["hours"] = 8
-            time["minutes"] = 8
+
 
             if time["hours"] < 10:
                 time = "%dF%d" % (time["hours"], time["minutes"])
