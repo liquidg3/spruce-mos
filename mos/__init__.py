@@ -31,20 +31,20 @@ leds_addresses = [
     [],  # mos is 1 or 2 so nothing for 0
     [
         {"product_id": 404511532, "address": 0x70, "name": 'The Ultimate'},  # 112
-        {"product_id": 419627296, "address": 0x71, "name": 'Style Consult'},  # 113
-        {"product_id": 404513412, "address": 0x72, "name": 'The Signature'},  # 114
-        {"product_id": 762876484, "address": 0x73, "name": 'The Regular'},  # 115
-        {"product_id": 404513644, "address": 0x75, "name": 'Spruced Up Shave'},  # 117
-        {"product_id": 9813368132, "address": 0x76, "name": 'Clean Up'},  # 118
-        {"product_id": 404512112, "address": 0x74, "name": 'The Simple'},  # 116
-        {"product_id": 404512392, "address": 0x77, "name": 'Head Shave'},  # 119
+        {"product_id": 1031020871724, "address": 0x71, "name": 'Bald Fade'},  # 113
+        {"product_id": 762876484, "address": 0x72, "name": 'The Regular'},  # 114
+        {"product_id": 404513412, "address": 0x73, "name": 'The Signature'},  # 115
+        {"product_id": 9813368132, "address": 0x75, "name": 'Clean Up'},  # 117
+        {"product_id": 404512112, "address": 0x76, "name": 'Buzzcut'},  # 118
+        {"product_id": 404512392, "address": 0x74, "name": 'Head Shave'},  # 116
+        {"product_id": 453926320, "address": 0x77, "name": 'Beard Trim'},  # 119
     ],
     [
-        {"product_id": 453926320, "address": 0x70, "name": 'Beard Trim'},  # 112
-        {"product_id": 9813387908, "address": 0x71, "name": 'Nose Wax'},  # 113
-        {"product_id": 6273210244, "address": 0x72, "name": 'Headshot'},  # 114
-        {"product_id": 762920836, "address": 0x73, "name": 'Shampoo'},  # 115
-        {"product_id": 404512688, "address": 0x74, "name": 'Young Spruce'},  # 116
+        {"product_id": 404513644, "address": 0x70, "name": 'Spruced Up Shave'},  # 112
+        {"product_id": 404512688, "address": 0x71, "name": 'Young Spruce'},  # 113
+        {"product_id": 9813387908, "address": 0x72, "name": 'Wax'},  # 114
+        {"product_id": 11825697604, "address": 0x73, "name": 'Beard Tinting'},  # 115
+        {"product_id": 11825795204, "address": 0x74, "name": 'Hair Tinting'},  # 116
     ],
 ]
 
@@ -71,13 +71,7 @@ def connect():
     # connect to appointments
     socket = SocketIO('https://appointments.spruce.me', verify=False,
                       hurry_interval_in_seconds=0.5)
-    socket.on('connect', on_connect)
-    socket.on('reconnect', on_reconnect)
-    socket.on('disconnect', on_disconnect)
-    socket.on('did-book-appointments', did_make_appointment)
-    socket.on('did-cancel-appointments', did_make_appointment)
-    socket.on('did-cancel-appointments', did_make_appointment)
-    socket.on('did-update-appointment', did_make_appointment)
+    setup_listeners()
 
     # wait for connections
     socket.wait()
@@ -124,7 +118,22 @@ def on_connect():
 
 def on_reconnect():
     logger.info('reconnected...')
+    setup_listeners()
     interval()
+
+
+def setup_listeners():
+    global socket
+
+    logger.info('reconnected...')
+
+    socket.on('connect', on_connect)
+    socket.on('reconnect', on_reconnect)
+    socket.on('disconnect', on_disconnect)
+    socket.on('did-book-appointments', did_make_appointment)
+    socket.on('did-cancel-appointments', did_make_appointment)
+    socket.on('did-cancel-appointments', did_make_appointment)
+    socket.on('did-update-appointment', did_make_appointment)
 
 
 def did_make_appointment(args):
@@ -156,10 +165,10 @@ def did_get_wait_times(error, wait_times):
             time = minutes_to_hours_minutes(wait_time)
 
 
-            if time["hours"] < 10:
-                time = "%dF%d" % (time["hours"], time["minutes"])
-            elif time["hours"] == 0:
+            if time["hours"] == 0:
                 time = "%d" % time["minutes"]
+            elif time["hours"] < 10:
+                time = "%dF%d" % (time["hours"], time["minutes"])
             else:
                 time = "%dF" % time['hours']
 
